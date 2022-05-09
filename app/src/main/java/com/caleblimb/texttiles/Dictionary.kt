@@ -16,7 +16,7 @@ class Dictionary(context: Context) {
     init {
         /* Convert file to String*/
         var rawText: String = ""
-        val delimiter = "\n"
+        val delimiter = "\r\n"
         try {
             val inputStream: InputStream = context.assets.open(fileName)
             val size: Int = inputStream.available()

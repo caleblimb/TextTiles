@@ -9,6 +9,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val dictionary = Dictionary(this)
-        dictionary.isWord("apple")
+        val result1 = dictionary.isWord("apple")
+        val result2= dictionary.isWord("apples")
+        val result3 = dictionary.isWord("appler")
+        val result4 = dictionary.isWord("appleg")
     }
 }
