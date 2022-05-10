@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#00FF0D</color>
+    <color name="colorSecondary">#00FFC8</color>
+    <color name="colorBackground">#EAFF99</color>
+    <color name="colorPuzzleTile">#7D1E00</color>
+    <color name="colorPuzzleTileText">#FFE0D7</color>
+    <color name="colorPuzzleBorder">#BB3025</color>
+    <color name="colorPuzzleBackground">#FF7065</color>
 </resources>
