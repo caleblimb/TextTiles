@@ -24,6 +24,7 @@ class Game(context: Context) : View(context) {
 
     private val backgroundColor = ResourcesCompat.getColor(resources, R.color.colorBackground, null)
 
+    // Puzzle is an array of Tiles
     val puzzle: Puzzle = Puzzle(context)
 
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {

@@ -4,5 +4,6 @@
  */
 package com.caleblimb.texttiles
 
+// Todo: Add coordinates for each tile
 class Tile(val value: Char, val sprite: Char) {
 }
