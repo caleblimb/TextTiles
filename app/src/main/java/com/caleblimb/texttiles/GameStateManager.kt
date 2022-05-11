@@ -1,25 +1,44 @@
 package com.caleblimb.texttiles
 
-class GameStateManager {
+class GameStateManager (_gameState : GameState){
 
-    // Constructor
-    // Not sure we need it, but it's here
-    class GameStateManager constructor() {
+    // Kotlin uses pass-by-value to pass a reference to the original object,
+    // so this GameState object should reference the same GameState object used
+    // in the Game class
+    val gameState : GameState = _gameState
 
-    }
+    // Array that holds words found since the last time update() was called
+    var foundWords : Array<String> = emptyArray()
 
-    // Static method to get the game state
+
+
+
+
+    // Static method to update the properties of the GameState
     companion object {
-        // ~ Do not edit the game array, its just for reading ~
+        fun update() {
+            findWords()
+            assignPoints()
+            assessEndCondition()
+        }
 
-        // This method takes in the state of the game (as an array of Tiles),
-        // and returns an array of tiles that form words
-        public fun determineGameState(game: Array<Tile?>) : Array<Tile?>{
-            var result : Array<Tile?> = emptyArray()
+        // Finds words on the board that have been formed
+        private fun findWords() {
+            // Todo: Fill this out
+        }
 
-            return result
+        // Assigns points based on the words the player formed in the last turn
+        private fun assignPoints() {
+            // Todo: Fill this out
+        }
+
+        // Determine if the game should continue to run or not
+        private fun assessEndCondition() {
+            // Todo: Fill this out
+            // if end condition == true
+            //     gameState.endGame()
         }
     }
 
-    // Static method to get the
+
 }

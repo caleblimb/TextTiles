@@ -18,6 +18,13 @@ class GameState (_board : Array<Tile?>, _gameName : String = "Text Tiles"){
     // Number of moves throughout the game
     private var moves : Int = 0
 
+    // If the game should end or not
+    private var endGame : Boolean = false
+
+
+
+
+
     /* SETTERS */
     fun updateBoard() {
         // Todo: Fill this out
@@ -31,6 +38,14 @@ class GameState (_board : Array<Tile?>, _gameName : String = "Text Tiles"){
     fun incMove() {
         moves += 1
     }
+
+    fun endGame() {
+        endGame = true
+    }
+
+
+
+
 
     /* GETTERS */
     fun getGameName() : String {
@@ -51,5 +66,9 @@ class GameState (_board : Array<Tile?>, _gameName : String = "Text Tiles"){
 
     fun getMoves() : Int {
         return moves
+    }
+
+    fun getEndGame() : Boolean {
+        return endGame
     }
 }
