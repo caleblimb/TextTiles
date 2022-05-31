@@ -1,9 +1,9 @@
 package com.caleblimb.texttiles
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
+import android.content.res.Resources
+import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 
@@ -165,6 +165,7 @@ class Puzzle(context: Context) : View(context) {
             puzzleHeight - puzzleBorder,
             paint
         )
+
         for (y in 0 until puzzleGridHeight) {
             for (x in 0 until puzzleGridWidth) {
                 var t: Tile? = getTile(x, y)
@@ -178,13 +179,25 @@ class Puzzle(context: Context) : View(context) {
                 )
                 /* If tile is not null, draw the letter it has */
                 t?.let {
-                    paint.color = tileTextColor
+
+                    val resourceID : Int = R.drawable.z // todo: Change this programatically to represent the right letter
+
+                    val tile : Bitmap = BitmapFactory.decodeResource(resources, resourceID)
+                    canvas.drawBitmap(tile, null, Rect(
+                        // Based this code on the code above.
+                        ((x * tileWidth) + ((tileMargin + puzzlePadding + puzzleBorder))).toInt(),
+                        ((y * tileHeight) + ((tileMargin + puzzlePadding + puzzleBorder))).toInt(),
+                        ((x * tileWidth) + tileWidth +((- tileMargin + puzzlePadding + puzzleBorder))).toInt(),
+                        ((y * tileHeight) + tileHeight +((- tileMargin + puzzlePadding + puzzleBorder))).toInt(),), null)
+
+                    // Un-comment this to get it back to how it was originally working (and comment the above)
+                    /*paint.color = tileTextColor
                     canvas.drawText(
                         t.sprite.toString(),
                         (x * tileWidth) + (tileWidth * 0.2f) + puzzlePadding + puzzleBorder,
                         (y * tileHeight) + (paint.textSize * 1.2f),
                         paint
-                    )
+                    )*/
                 }
             }
         }
