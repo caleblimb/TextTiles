@@ -1,9 +1,7 @@
 package com.caleblimb.texttiles
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.*
-import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 
@@ -180,9 +178,7 @@ class Puzzle(context: Context) : View(context) {
                 /* If tile is not null, draw the letter it has */
                 t?.let {
 
-                    val resourceID : Int = R.drawable.z // todo: Change this programatically to represent the right letter
-
-                    val tile : Bitmap = BitmapFactory.decodeResource(resources, resourceID)
+                    val tile : Bitmap = BitmapFactory.decodeResource(resources, t.getID()) // t.getId() gets the id of the corresponding drawable
                     canvas.drawBitmap(tile, null, Rect(
                         // Based this code on the code above.
                         ((x * tileWidth) + ((tileMargin + puzzlePadding + puzzleBorder))).toInt(),
