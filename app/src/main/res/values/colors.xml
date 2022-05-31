@@ -14,4 +14,9 @@
     <color name="colorPuzzleTileText">#FFE0D7</color>
     <color name="colorPuzzleBorder">#BB3025</color>
     <color name="colorPuzzleBackground">#FF7065</color>
+    <color name="paletteBrown">#A8763E</color>
+    <color name="paletteWarmWhite">#F7F3E3</color>
+    <color name="paletteCoolWhite">#ECF0F1</color>
+    <color name="paletteRed">#6F1A07</color>
+    <color name="paletteBlack">#2B2118</color>
 </resources>

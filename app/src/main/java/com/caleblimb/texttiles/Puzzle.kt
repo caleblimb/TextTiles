@@ -19,8 +19,8 @@ class Puzzle(context: Context) : View(context) {
 
     private var puzzlePadding: Float = 0f
     private var puzzleBorder: Float = 0f
-    private var puzzleTileWidth: Int = 6
-    private var puzzleTileHeight: Int = 6
+    private var puzzleGridWidth: Int = 5
+    private var puzzleGridHeight: Int = 5
     private var puzzleBorderColor =
         ResourcesCompat.getColor(resources, R.color.colorPuzzleBorder, null)
     private var puzzleBackgrounColor =
@@ -31,7 +31,7 @@ class Puzzle(context: Context) : View(context) {
     private val tileColor = ResourcesCompat.getColor(resources, R.color.colorPuzzleTile, null)
     private val tileTextColor =
         ResourcesCompat.getColor(resources, R.color.colorPuzzleTileText, null)
-    private var puzzle: Array<Tile?>
+    private var gameBoard: Array<Tile?>
     private lateinit var bitmap: Bitmap
     private lateinit var canvas: Canvas
     private val paint: Paint = Paint().apply {
@@ -39,7 +39,7 @@ class Puzzle(context: Context) : View(context) {
     }
 
     init {
-        puzzle = generatePuzzle(puzzleTileWidth * puzzleTileHeight)
+        gameBoard = generatePuzzle(puzzleGridWidth * puzzleGridHeight)
     }
 
     fun scale(x: Float, y: Float, width: Float) {
@@ -50,8 +50,8 @@ class Puzzle(context: Context) : View(context) {
 
         puzzleBorder = puzzleWidth / 50
         puzzlePadding = puzzleBorder / 4
-        tileWidth = (puzzleWidth - (puzzleBorder * 2) - (puzzlePadding * 2)) / puzzleTileWidth
-        tileHeight = (puzzleHeight - (puzzleBorder * 2) - (puzzlePadding * 2)) / puzzleTileHeight
+        tileWidth = (puzzleWidth - (puzzleBorder * 2) - (puzzlePadding * 2)) / puzzleGridWidth
+        tileHeight = (puzzleHeight - (puzzleBorder * 2) - (puzzlePadding * 2)) / puzzleGridHeight
         paint.textSize = tileWidth * 0.8f
         tileMargin = puzzlePadding
     }
@@ -89,7 +89,7 @@ class Puzzle(context: Context) : View(context) {
                 return
             }
         }
-        if (x < puzzleTileWidth - 1) {
+        if (x < puzzleGridWidth - 1) {
             val right = getTile(x + 1, y)
             right ?: run {
                 setTile(x + 1, y, getTile(x, y))
@@ -105,7 +105,7 @@ class Puzzle(context: Context) : View(context) {
                 return
             }
         }
-        if (y < puzzleTileHeight - 1) {
+        if (y < puzzleGridHeight - 1) {
             val down = getTile(x, y + 1)
             down ?: run {
                 setTile(x, y + 1, getTile(x, y))
@@ -130,24 +130,24 @@ class Puzzle(context: Context) : View(context) {
 
     private fun getTile(x: Int, y: Int): Tile? {
         if (x < 0 ||
-            x > puzzleTileWidth - 1 ||
+            x > puzzleGridWidth - 1 ||
             y < 0 ||
-            y > puzzleTileHeight - 1
+            y > puzzleGridHeight - 1
         ) {
             return null
         }
-        return puzzle[((y * puzzleTileWidth.toInt()) + x)]
+        return gameBoard[((y * puzzleGridWidth) + x)]
     }
 
     private fun setTile(x: Int, y: Int, t: Tile?) {
         if (x < 0 ||
-            x > puzzleTileWidth - 1 ||
+            x > puzzleGridWidth - 1 ||
             y < 0 ||
-            y > puzzleTileHeight - 1
+            y > puzzleGridHeight - 1
         ) {
             return
         }
-        puzzle[((y * puzzleTileWidth) + x)] = t
+        gameBoard[((y * puzzleGridWidth) + x)] = t
     }
 
     fun render(): Bitmap {
@@ -165,8 +165,8 @@ class Puzzle(context: Context) : View(context) {
             puzzleHeight - puzzleBorder,
             paint
         )
-        for (y in 0 until puzzleTileHeight) {
-            for (x in 0 until puzzleTileWidth) {
+        for (y in 0 until puzzleGridHeight) {
+            for (x in 0 until puzzleGridWidth) {
                 var t: Tile? = getTile(x, y)
                 paint.color = tileColor
                 canvas.drawRect(
