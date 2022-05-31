@@ -2,10 +2,10 @@ package com.caleblimb.texttiles
 import java.util.Random
 
 class TileBag {
-    var _contents = mutableListOf<Tile>()
+    private var contents = mutableListOf<Tile>()
 
 //    empty a used bag and fill it with new tiles based off of the distribution amount
-    fun FillBag()
+    fun fillBag()
     {
 
 
@@ -24,9 +24,9 @@ class TileBag {
 
 
 //        clear bag if there are contents, so that we can reuse the object if we replay
-        if (_contents.size > 0 )
+        if (contents.size > 0 )
         {
-            _contents = mutableListOf<Tile>()
+            contents = mutableListOf<Tile>()
         }
 
 //        Create a tile and add each letter with its score amount
@@ -34,19 +34,19 @@ class TileBag {
         {
             val score = letterScores[letter]!!
             val distributionNumber = letterDistribution[letter]!!
-            val tile = Tile(letter, score)
-            for (i in 0..distributionNumber)
+            val tile = Tile(letter, score, letter)
+            for (i in 0 until distributionNumber)
             {
-                _contents.add(tile)
+                contents.add(tile)
             }
         }
     }
 
 //  return a random tile and remove it from the bag
-    fun PullTile(): Tile
+    fun pullTile(): Tile
     {
         val random = Random()
-        val randIndex = random.nextInt(_contents.size)
-        return _contents.removeAt(randIndex)
+        val randIndex = random.nextInt(contents.size)
+        return contents.removeAt(randIndex)
     }
 }

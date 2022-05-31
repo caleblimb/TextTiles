@@ -9,34 +9,7 @@ import androidx.core.content.res.ResourcesCompat
 
 class Puzzle(context: Context) : View(context) {
     /* Create possible tile types */
-    val tiles: Array<Tile> = arrayOf(
-        Tile('a', 'A'),
-        Tile('b', 'B'),
-        Tile('c', 'C'),
-        Tile('d', 'D'),
-        Tile('e', 'E'),
-        Tile('f', 'F'),
-        Tile('g', 'G'),
-        Tile('h', 'H'),
-        Tile('i', 'I'),
-        Tile('j', 'J'),
-        Tile('k', 'K'),
-        Tile('l', 'L'),
-        Tile('m', 'M'),
-        Tile('n', 'N'),
-        Tile('o', 'O'),
-        Tile('p', 'P'),
-        Tile('q', 'Q'),
-        Tile('r', 'R'),
-        Tile('s', 'S'),
-        Tile('t', 'T'),
-        Tile('u', 'U'),
-        Tile('v', 'V'),
-        Tile('w', 'W'),
-        Tile('x', 'X'),
-        Tile('y', 'Y'),
-        Tile('z', 'Z')
-    )
+    var bag: TileBag = TileBag()
 
     /* Define game board dimensions */
     public var puzzleX: Float = 0f
@@ -84,10 +57,12 @@ class Puzzle(context: Context) : View(context) {
     }
 
     fun generatePuzzle(size: Int): Array<Tile?> {
+
+        bag.fillBag()
         var newPuzzle: Array<Tile?> = Array<Tile?>(size) { null }
         //TODO change this to random Scrabble letter frequency
         for (i in 1 until newPuzzle.size) {
-            newPuzzle[i] = tiles[i % tiles.size]
+            newPuzzle[i] = bag.pullTile()
         }
         return newPuzzle
     }
