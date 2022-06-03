@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        val game : Game = Game(this)
+        val game : CanvasManager = CanvasManager(this)
 
         val buttonStart = findViewById<Button>(R.id.buttonStart)
         buttonStart.setOnClickListener() {

@@ -12,7 +12,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 
-class Game(context: Context) : View(context) {
+class CanvasManager(context: Context) : View(context) {
     private val primaryColor = ResourcesCompat.getColor(resources, R.color.colorPrimary, null)
     private val secondaryColor = ResourcesCompat.getColor(resources, R.color.colorSecondary, null)
     private lateinit var extraCanvas: Canvas
