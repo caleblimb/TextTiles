@@ -13,16 +13,14 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 
 class CanvasManager(context: Context) : View(context) {
-    private val primaryColor = ResourcesCompat.getColor(resources, R.color.colorPrimary, null)
-    private val secondaryColor = ResourcesCompat.getColor(resources, R.color.colorSecondary, null)
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
 
     private val paint = Paint().apply {
-        color = primaryColor
+        color = R.color.black as Int
     }
 
-    private val backgroundColor = ResourcesCompat.getColor(resources, R.color.colorBackground, null)
+    private val backgroundColor = ResourcesCompat.getColor(resources, R.color.warm_white, null)
 
     // Puzzle is an array of Tiles
     val puzzle: Puzzle = Puzzle(context)

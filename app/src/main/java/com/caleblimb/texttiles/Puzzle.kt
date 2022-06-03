@@ -20,15 +20,12 @@ class Puzzle(context: Context) : View(context) {
     private var puzzleGridWidth: Int = 5
     private var puzzleGridHeight: Int = 5
     private var puzzleBorderColor =
-        ResourcesCompat.getColor(resources, R.color.colorPuzzleBorder, null)
-    private var puzzleBackgrounColor =
-        ResourcesCompat.getColor(resources, R.color.colorPuzzleBackground, null)
+        ResourcesCompat.getColor(resources, R.color.red, null)
+    private var puzzleBackgroundColor =
+        ResourcesCompat.getColor(resources, R.color.brown, null)
     private var tileWidth: Float = 0f
     private var tileHeight: Float = 0f
     private var tileMargin: Float = 0f
-    private val tileColor = ResourcesCompat.getColor(resources, R.color.colorPuzzleTile, null)
-    private val tileTextColor =
-        ResourcesCompat.getColor(resources, R.color.colorPuzzleTileText, null)
     private var gameBoard: Array<Tile?>
     private lateinit var bitmap: Bitmap
     private lateinit var canvas: Canvas
@@ -55,9 +52,8 @@ class Puzzle(context: Context) : View(context) {
     }
 
     fun generatePuzzle(size: Int): Array<Tile?> {
-
         bag.fillBag()
-        var newPuzzle: Array<Tile?> = Array<Tile?>(size) { null }
+        val newPuzzle: Array<Tile?> = Array<Tile?>(size) { null }
         //TODO change this to random Scrabble letter frequency
         for (i in 1 until newPuzzle.size) {
             newPuzzle[i] = bag.pullTile()
@@ -155,7 +151,7 @@ class Puzzle(context: Context) : View(context) {
         canvas = Canvas(bitmap)
 
         canvas.drawColor(puzzleBorderColor)
-        paint.color = puzzleBackgrounColor
+        paint.color = puzzleBackgroundColor
         canvas.drawRect(
             puzzleBorder,
             puzzleBorder,
@@ -167,17 +163,8 @@ class Puzzle(context: Context) : View(context) {
         for (y in 0 until puzzleGridHeight) {
             for (x in 0 until puzzleGridWidth) {
                 var t: Tile? = getTile(x, y)
-                paint.color = tileColor
-                canvas.drawRect(
-                    (x * tileWidth) + tileMargin + puzzlePadding + puzzleBorder,
-                    (y * tileHeight) + tileMargin + puzzlePadding + puzzleBorder,
-                    (x * tileWidth) + tileWidth - tileMargin + puzzlePadding + puzzleBorder,
-                    (y * tileHeight) + tileHeight - tileMargin + puzzlePadding + puzzleBorder,
-                    paint
-                )
                 /* If tile is not null, draw the letter it has */
                 t?.let {
-
                     val tile : Bitmap = BitmapFactory.decodeResource(resources, t.getID()) // t.getId() gets the id of the corresponding drawable
                     canvas.drawBitmap(tile, null, Rect(
                         // Based this code on the code above.
@@ -185,15 +172,6 @@ class Puzzle(context: Context) : View(context) {
                         ((y * tileHeight) + ((tileMargin + puzzlePadding + puzzleBorder))).toInt(),
                         ((x * tileWidth) + tileWidth +((- tileMargin + puzzlePadding + puzzleBorder))).toInt(),
                         ((y * tileHeight) + tileHeight +((- tileMargin + puzzlePadding + puzzleBorder))).toInt(),), null)
-
-                    // Un-comment this to get it back to how it was originally working (and comment the above)
-                    /*paint.color = tileTextColor
-                    canvas.drawText(
-                        t.sprite.toString(),
-                        (x * tileWidth) + (tileWidth * 0.2f) + puzzlePadding + puzzleBorder,
-                        (y * tileHeight) + (paint.textSize * 1.2f),
-                        paint
-                    )*/
                 }
             }
         }
