@@ -12,18 +12,17 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 
-class CanvasManager(context: Context) : View(context) {
+class CanvasManager(context: Context, puzzle: Puzzle) : View(context) {
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
+
+    val puzzle = puzzle
 
     private val paint = Paint().apply {
         color = R.color.black as Int
     }
 
     private val backgroundColor = ResourcesCompat.getColor(resources, R.color.warm_white, null)
-
-    // Puzzle is an array of Tiles
-    val puzzle: Puzzle = Puzzle(context)
 
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
         super.onSizeChanged(width, height, oldWidth, oldHeight)
@@ -37,7 +36,12 @@ class CanvasManager(context: Context) : View(context) {
         extraCanvas.drawColor(backgroundColor)
 
         val puzzleMargin: Float = 64f
-        val puzzleWidth = width - (puzzleMargin * 2)
+
+        var puzzleWidth = width - (puzzleMargin * 2)
+        val halfHeight = (height/2) - (puzzleMargin * 2)
+        if (puzzleWidth < halfHeight)
+            puzzleWidth = halfHeight
+
         puzzle.scale(
             0 + puzzleMargin,
             height - (puzzleWidth + puzzleMargin),

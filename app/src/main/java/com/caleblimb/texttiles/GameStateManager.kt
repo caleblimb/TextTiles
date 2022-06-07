@@ -1,11 +1,11 @@
 package com.caleblimb.texttiles
 
-class GameStateManager (_gameState : GameState){
+class GameStateManager (_gameState : Game){
 
     // Kotlin uses pass-by-value to pass a reference to the original object,
     // so this GameState object should reference the same GameState object used
     // in the Game class
-    val gameState : GameState = _gameState
+    val gameState : Game = _gameState
 
     // Array that holds words found since the last time update() was called
     var foundWords : Array<String> = emptyArray()

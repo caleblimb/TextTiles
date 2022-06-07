@@ -5,10 +5,12 @@ import android.graphics.*
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 
-class Puzzle(context: Context) : View(context) {
-    /* Create possible tile types */
-    var bag: TileBag = TileBag()
-
+class Puzzle(
+    context: Context,
+    private var puzzleGridWidth: Int,
+    private var puzzleGridHeight: Int,
+    private var gameBoard: Array<Tile?>
+) : View(context) {
     /* Define game board dimensions */
     public var puzzleX: Float = 0f
     public var puzzleY: Float = 0f
@@ -17,8 +19,6 @@ class Puzzle(context: Context) : View(context) {
 
     private var puzzlePadding: Float = 0f
     private var puzzleBorder: Float = 0f
-    private var puzzleGridWidth: Int = 5
-    private var puzzleGridHeight: Int = 5
     private var puzzleBorderColor =
         ResourcesCompat.getColor(resources, R.color.red, null)
     private var puzzleBackgroundColor =
@@ -26,15 +26,10 @@ class Puzzle(context: Context) : View(context) {
     private var tileWidth: Float = 0f
     private var tileHeight: Float = 0f
     private var tileMargin: Float = 0f
-    private var gameBoard: Array<Tile?>
     private lateinit var bitmap: Bitmap
     private lateinit var canvas: Canvas
     private val paint: Paint = Paint().apply {
         style = Paint.Style.FILL
-    }
-
-    init {
-        gameBoard = generatePuzzle(puzzleGridWidth * puzzleGridHeight)
     }
 
     fun scale(x: Float, y: Float, width: Float) {
@@ -51,27 +46,16 @@ class Puzzle(context: Context) : View(context) {
         tileMargin = puzzlePadding
     }
 
-    fun generatePuzzle(size: Int): Array<Tile?> {
-        bag.fillBag()
-        val newPuzzle: Array<Tile?> = Array<Tile?>(size) { null }
-        //TODO change this to random Scrabble letter frequency
-        for (i in 1 until newPuzzle.size) {
-            newPuzzle[i] = bag.pullTile()
-        }
-        return newPuzzle
-    }
-
     fun touchStart(x: Float, y: Float) {
         val coords = getCoordinatesOfTileAtLocation(x, y)
         moveTile(coords.x, coords.y)
     }
 
-    fun touchMove(x:Float, y:Float) {
+    fun touchMove(x: Float, y: Float) {
 
     }
 
-    fun touchUp(x:Float,y:Float) {
-
+    fun touchUp(x: Float, y: Float) {
     }
 
     private fun moveTile(x: Int, y: Int) {
@@ -144,7 +128,7 @@ class Puzzle(context: Context) : View(context) {
         gameBoard[((y * puzzleGridWidth) + x)] = t
     }
 
-    fun render(): Bitmap {
+    public fun render(): Bitmap {
         if (::bitmap.isInitialized) bitmap.recycle()
         bitmap =
             Bitmap.createBitmap(puzzleWidth.toInt(), puzzleHeight.toInt(), Bitmap.Config.ARGB_8888)
@@ -165,13 +149,19 @@ class Puzzle(context: Context) : View(context) {
                 var t: Tile? = getTile(x, y)
                 /* If tile is not null, draw the letter it has */
                 t?.let {
-                    val tile : Bitmap = BitmapFactory.decodeResource(resources, t.getID()) // t.getId() gets the id of the corresponding drawable
-                    canvas.drawBitmap(tile, null, Rect(
-                        // Based this code on the code above.
-                        ((x * tileWidth) + ((tileMargin + puzzlePadding + puzzleBorder))).toInt(),
-                        ((y * tileHeight) + ((tileMargin + puzzlePadding + puzzleBorder))).toInt(),
-                        ((x * tileWidth) + tileWidth +((- tileMargin + puzzlePadding + puzzleBorder))).toInt(),
-                        ((y * tileHeight) + tileHeight +((- tileMargin + puzzlePadding + puzzleBorder))).toInt(),), null)
+                    val tile: Bitmap = BitmapFactory.decodeResource(
+                        resources,
+                        t.getID()
+                    ) // t.getId() gets the id of the corresponding drawable
+                    canvas.drawBitmap(
+                        tile, null, Rect(
+                            // Based this code on the code above.
+                            ((x * tileWidth) + ((tileMargin + puzzlePadding + puzzleBorder))).toInt(),
+                            ((y * tileHeight) + ((tileMargin + puzzlePadding + puzzleBorder))).toInt(),
+                            ((x * tileWidth) + tileWidth + ((-tileMargin + puzzlePadding + puzzleBorder))).toInt(),
+                            ((y * tileHeight) + tileHeight + ((-tileMargin + puzzlePadding + puzzleBorder))).toInt(),
+                        ), null
+                    )
                 }
             }
         }
