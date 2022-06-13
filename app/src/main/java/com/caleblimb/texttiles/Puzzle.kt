@@ -9,7 +9,8 @@ class Puzzle(
     context: Context,
     private var puzzleGridWidth: Int,
     private var puzzleGridHeight: Int,
-    private var gameBoard: Array<Tile?>
+    private var gameBoard: Array<Tile?>,
+    private val onTileMove: () -> Unit
 ) : View(context) {
     /* Define game board dimensions */
     public var puzzleX: Float = 0f
@@ -64,6 +65,7 @@ class Puzzle(
             left ?: run {
                 setTile(x - 1, y, getTile(x, y))
                 setTile(x, y, null)
+                onTileMove()
                 return
             }
         }
@@ -72,6 +74,7 @@ class Puzzle(
             right ?: run {
                 setTile(x + 1, y, getTile(x, y))
                 setTile(x, y, null)
+                onTileMove()
                 return
             }
         }
@@ -80,6 +83,7 @@ class Puzzle(
             up ?: run {
                 setTile(x, y - 1, getTile(x, y))
                 setTile(x, y, null)
+                onTileMove()
                 return
             }
         }
@@ -88,6 +92,7 @@ class Puzzle(
             down ?: run {
                 setTile(x, y + 1, getTile(x, y))
                 setTile(x, y, null)
+                onTileMove()
                 return
             }
         }
@@ -106,7 +111,7 @@ class Puzzle(
         return getTile(tx, ty)
     }
 
-    private fun getTile(x: Int, y: Int): Tile? {
+    public fun getTile(x: Int, y: Int): Tile? {
         if (x < 0 ||
             x > puzzleGridWidth - 1 ||
             y < 0 ||

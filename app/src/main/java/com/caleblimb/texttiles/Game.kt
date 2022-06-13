@@ -2,12 +2,14 @@ package com.caleblimb.texttiles
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 
 class Game : AppCompatActivity() {
+    lateinit var dictionary: Dictionary
     private var bag: TileBag = TileBag()
     // Name of the game mode
     private val gameName : String = "Text Tiles"
@@ -25,18 +27,21 @@ class Game : AppCompatActivity() {
     private var endGame : Boolean = false
 
     lateinit var gameBoard: Array<Tile?>
+    lateinit var puzzle: Puzzle
+
+    val puzzleWidth = 5
+    val puzzleHeight = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_game)
 
-        val puzzleWidth = 5
-        val puzzleHeight = 5
+        dictionary = Dictionary(this)
 
         // Array of the board's tiles
         gameBoard = generatePuzzle(puzzleWidth * puzzleHeight)
-        var puzzle: Puzzle = Puzzle(this, puzzleWidth, puzzleHeight, gameBoard)
+        puzzle = Puzzle(this, puzzleWidth, puzzleHeight, gameBoard, ::onTileMove)
 
         val canvas : CanvasManager = CanvasManager(this, puzzle)
         val canvasLayout : ConstraintLayout = findViewById<ConstraintLayout>(R.id.layoutCanvas)
@@ -58,6 +63,36 @@ class Game : AppCompatActivity() {
         )
     }
 
+    private fun onTileMove() {
+        incMove()
+        findViewById<TextView>(R.id.textViewMoves).text = "Moves: ".plus(moves.toString())
+        findViewById<TextView>(R.id.textViewWords).text = getAllWords().toString()
+    }
+
+    private fun getAllWords(): ArrayList<String> {
+        val words: ArrayList<String> = ArrayList()
+
+        for (y in 0 until puzzleHeight) {
+            for (x in 0 until puzzleWidth) {
+                var word: String = ""
+                for (h in x until puzzleWidth) {
+                    word += puzzle.getTile(x + h, y)?.value ?: ' '
+                    if (word.length >=3 && dictionary.isWord(word)) {
+                        words.add(word)
+                    }
+                }
+                word = ""
+                for (v in y until puzzleHeight) {
+                    word += puzzle.getTile(x, y + v)?.value ?: ' '
+                    if (word.length >=3 && dictionary.isWord(word)) {
+                        words.add(word)
+                    }
+                }
+            }
+        }
+
+        return words
+    }
 
     private fun generatePuzzle(size: Int): Array<Tile?> {
         bag.fillBag()
