@@ -78,6 +78,8 @@ class CanvasManager(context: Context, puzzle: Puzzle) : View(context) {
 
     private fun touchUp(x: Float, y: Float) {
         puzzle.touchUp(x - puzzle.puzzleX, y - puzzle.puzzleY)
+        val sm = soundManager()
+        sm.playSound("move", context)
     }
 
     private fun isInPuzzle(x: Float, y: Float): Boolean {
