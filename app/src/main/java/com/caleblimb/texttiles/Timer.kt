@@ -102,7 +102,8 @@ class Timer( TimerLength: Long?)
 
     fun getTimeRemainingSeconds() : Long
     {
-        return newTimer.timeRemaining
+       // return newTimer.timeRemaining
+        return 0;
     }
 
     // This will pause the timer, but will not destroy the timer
