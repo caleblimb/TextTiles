@@ -59,43 +59,40 @@ class Puzzle(
     fun touchUp(x: Float, y: Float) {
     }
 
+    private fun swapTile(x: Int, y: Int, newX: Int, newY: Int): Boolean {
+        if (getTile(newX, newY) == null) {
+            setTile(newX, newY, getTile(x, y))
+            setTile(x, y, null)
+            return true
+        }
+        return false
+    }
+
     private fun moveTile(x: Int, y: Int) {
-        if (x > 0) {
-            val left = getTile(x - 1, y)
-            left ?: run {
-                setTile(x - 1, y, getTile(x, y))
-                setTile(x, y, null)
-                onTileMove()
-                return
-            }
+        var moved = false
+        //Up
+        for (i in y - 1 downTo 0) {
+            if (swapTile(x, y - i, x, y - i - 1))
+                moved = true
         }
-        if (x < puzzleGridWidth - 1) {
-            val right = getTile(x + 1, y)
-            right ?: run {
-                setTile(x + 1, y, getTile(x, y))
-                setTile(x, y, null)
-                onTileMove()
-                return
-            }
+        //Right
+        for (i in puzzleGridWidth - x - 2 downTo 0) {
+            if (swapTile(x + i, y, x + i + 1, y))
+                moved = true
         }
-        if (y > 0) {
-            val up = getTile(x, y - 1)
-            up ?: run {
-                setTile(x, y - 1, getTile(x, y))
-                setTile(x, y, null)
-                onTileMove()
-                return
-            }
+        //Down
+        for (i in puzzleGridHeight - y - 2 downTo 0) {
+            if (swapTile(x, y + i, x, y + i + 1))
+                moved = true
         }
-        if (y < puzzleGridHeight - 1) {
-            val down = getTile(x, y + 1)
-            down ?: run {
-                setTile(x, y + 1, getTile(x, y))
-                setTile(x, y, null)
-                onTileMove()
-                return
-            }
+        //Left
+        for (i in x - 1 downTo 0) {
+            if (swapTile(x - i, y, x - i - 1, y))
+                moved = true
         }
+
+        if (moved)
+            onTileMove()
     }
 
     private fun getCoordinatesOfTileAtLocation(x: Float, y: Float): Coordinate {
