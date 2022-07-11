@@ -95,8 +95,8 @@ class TileBag {
     // Static method to get the score of a single letter
     companion object {
         // Can't access local variables from static so I have to redeclare it here
-        private const val tier1 : Int = 8
-        private const val tier2 : Int = 5
+        private const val tier1 : Int = 12
+        private const val tier2 : Int = 6
         private const val tier3 : Int = 3
         private const val tier4 : Int = 1
         val letterScores : HashMap<Char, Int> = hashMapOf(
