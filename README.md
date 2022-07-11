@@ -4,9 +4,9 @@ Text Tiles is an Android App word game.  It was created and designed for the pur
 # How to use 
 Text Tiles works just like a normal Android App.  When downloaded onto your phone or emulator, you can click begin to start your game.  A random board of tiles will be generated which you can then manipulate to form as many words as you can.  Once your time is up, you will then be shown how many words you made and your score. 
 
-//We have two different game modes to play.  The first is Speed Mode that accumulates all the words
-//you made and gives a score at the end.  The second is the _______ that will judge your board at the
-//end of the time and see how many words are on it, and give you a corresponding score. 
+* We have two different game modes to play.  The first is Speed Mode that accumulates all the words
+* you made and gives a score at the end.  The second is the _______ that will judge your board at the
+* end of the time and see how many words are on it, and give you a corresponding score. 
   
 [Software Demo Video] () 
   
@@ -18,12 +18,12 @@ We used Kotlin to create an Android app for this project.
 * Kotlin JVM Target 1.8 
 
 # Collaborators 
-Caleb Limb 
-David Doria 
-David Mumford 
-Jonathan Gunderson 
-Mark Howard 
-Mitchell Bower 
+* Caleb Limb 
+* David Doria 
+* David Mumford 
+* Jonathan Gunderson 
+* Mark Howard 
+* Mitchell Bower 
 
 # Useful Websites  
 * [Kotlin Documentation](https://kotlinlang.org/docs/home.html) 
