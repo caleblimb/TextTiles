@@ -8,8 +8,6 @@ Text Tiles works just like a normal Android App.  When downloaded onto your phon
 * you made and gives a score at the end.  The second is the _______ that will judge your board at the
 * end of the time and see how many words are on it, and give you a corresponding score. 
   
-[Software Demo Video] () 
-  
 # Development Environment 
 We used Kotlin to create an Android app for this project.  
 * Android Studio Chipmunk 
