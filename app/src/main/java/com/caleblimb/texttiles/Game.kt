@@ -35,6 +35,9 @@ class Game : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val bk = soundManager()
+        bk.startBackground(this)
+
         setContentView(R.layout.activity_game)
 
         dictionary = Dictionary(this)

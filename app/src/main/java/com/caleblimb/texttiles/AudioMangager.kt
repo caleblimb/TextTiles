@@ -18,5 +18,9 @@ class soundManager() {
         }
     }
 
+    fun startBackground(activity: Context) {
+        var back = MediaPlayer.create(activity, R.raw.background);
+        back.start()
+    }
 
 }
