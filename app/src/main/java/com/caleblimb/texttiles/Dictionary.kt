@@ -34,4 +34,13 @@ class Dictionary(context: Context) {
         return (word.lowercase() in words)
     }
 
+    fun wordPoints(word: String) : Int {
+        var points : Int = 0
+
+        if (isWord(word)){
+            word.forEach { points += TileBag.getScoreOfChar(it) }
+        }
+
+        return points
+    }
 }

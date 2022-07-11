@@ -138,7 +138,8 @@ class Game : AppCompatActivity() {
         return gameName
     }
 
-    fun getTotalPoints() : Int {
+    fun getTotalPoints(tile : List<Tile>) : Int {
+
         return totalPoints
     }
 
