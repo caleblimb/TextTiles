@@ -2,7 +2,7 @@ package com.caleblimb.texttiles
 import java.util.Random
 
 class TileBag {
-    private var contents = mutableListOf<Tile>()
+    public var contents = mutableListOf<Tile>()
 
     val tier1 : Int = 8
     val tier2 : Int = 5
@@ -84,12 +84,14 @@ class TileBag {
         }
     }
 
-//  return a random tile and remove it from the bag
-    fun pullTile(): Tile
+//  return a specific tile and remove it from the bag
+    fun pullTile(tile_number : Int): Tile
     {
-        val random = Random()
-        val randIndex = random.nextInt(contents.size)
-        return contents.removeAt(randIndex)
+            var index = tile_number
+            if (index > contents.size) {
+            index -= contents.size
+            }
+            return contents.removeAt(index)
     }
 
     // Static method to get the score of a single letter

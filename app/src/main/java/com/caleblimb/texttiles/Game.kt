@@ -1,15 +1,23 @@
 package com.caleblimb.texttiles
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import java.lang.NumberFormatException
+
+
+
+import kotlin.random.Random
 
 class Game : AppCompatActivity() {
     lateinit var dictionary: Dictionary
+//    Bag of possible tiles
     private var bag: TileBag = TileBag()
     // Name of the game mode
     private val gameName : String = "Text Tiles"
@@ -32,6 +40,9 @@ class Game : AppCompatActivity() {
     val puzzleWidth = 5
     val puzzleHeight = 5
 
+//    Seeded board value
+    private var seed: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,8 +50,13 @@ class Game : AppCompatActivity() {
 
         dictionary = Dictionary(this)
 
+
+        // get the seeded input from the intent
+        seed = intent.getStringExtra("seed").toString().toInt() % 99999999
+
+
         // Array of the board's tiles
-        gameBoard = generatePuzzle(puzzleWidth * puzzleHeight)
+        gameBoard = generatePuzzle(puzzleWidth * puzzleHeight, seed)
         puzzle = Puzzle(this, puzzleWidth, puzzleHeight, gameBoard, ::onTileMove)
 
         val canvas : CanvasManager = CanvasManager(this, puzzle)
@@ -62,6 +78,10 @@ class Game : AppCompatActivity() {
             }
         )
     }
+
+//    Generate a seeded list using a random number
+    private fun getRandomList(random: Random, size: Int): List<Int> =
+        List(size) { random.nextInt(0, bag.contents.size - 1) }
 
     private fun onTileMove() {
         incMove()
@@ -94,13 +114,32 @@ class Game : AppCompatActivity() {
         return words
     }
 
-    private fun generatePuzzle(size: Int): Array<Tile?> {
+
+    private fun generatePuzzle(size: Int, seed: Int): Array<Tile?> {
+//        Generate a bag of tiles to pull from
         bag.fillBag()
-        val newPuzzle: Array<Tile?> = Array<Tile?>(size) { null }
-        //TODO change this to random Scrabble letter frequency
-        for (i in 1 until newPuzzle.size) {
-            newPuzzle[i] = bag.pullTile()
+        var newPuzzle: Array<Tile?> = Array<Tile?>(size) { null }
+
+
+        val randSeed = Random(seed)
+        var toPull = getRandomList(randSeed, size - 1)
+
+//        Use this to see generated list
+//        Log.d("-------------seeded list", toPull.toString())
+
+        // loop through adding the numbers from the list to pull out the same tiles
+        // This relies heavily on the fact that the order of the seeded list and the tiles in the contents will always be the same
+        var accumulator = 0
+
+        for (i in toPull.indices) {
+            accumulator += toPull[i]
+
+            if (accumulator >= bag.contents.size)
+                accumulator -= bag.contents.size
+
+            newPuzzle[i] = bag.pullTile(accumulator)
         }
+
         return newPuzzle
     }
 
