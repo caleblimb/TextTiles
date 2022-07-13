@@ -63,6 +63,7 @@ class GameStateManager (_gameState : Game){
             findWords()
             assignPoints()
             assessEndCondition()
+
         }
 
         // Finds words on the board that have been formed

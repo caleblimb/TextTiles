@@ -1,16 +1,12 @@
 package com.caleblimb.texttiles
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import java.lang.NumberFormatException
-
 
 
 import kotlin.random.Random
@@ -45,7 +41,10 @@ class Game : AppCompatActivity() {
 //    Seeded board value
     private var seed: Int = 0
 
-    private var newTimerInstance:Timer = Timer(30)
+    var newTimerInstance:Timer = Timer(30)
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -63,7 +62,7 @@ class Game : AppCompatActivity() {
 
         // Array of the board's tiles
         gameBoard = generatePuzzle(puzzleWidth * puzzleHeight, seed)
-        puzzle = Puzzle(this, puzzleWidth, puzzleHeight, gameBoard, ::onTileMove)
+        puzzle = Puzzle(this, puzzleWidth, puzzleHeight, gameBoard, ::onTileMove, ::updateDisplayTimer)
 
         val canvas : CanvasManager = CanvasManager(this, puzzle)
         val canvasLayout : ConstraintLayout = findViewById<ConstraintLayout>(R.id.layoutCanvas)
@@ -91,17 +90,18 @@ class Game : AppCompatActivity() {
 
     private fun onTileMove() {
         incMove()
+        println("Pdfhgdfhdfhse")
         findViewById<TextView>(R.id.textViewMoves).text = "Moves: ".plus(moves.toString())
         findViewById<TextView>(R.id.textViewWords).text = getAllWords().toString()
-        //findViewById<TextView>(R.id.TimeRemaining).text = "Time: "
+
     }
 
-    private fun timerUpdate()
+    private fun updateDisplayTimer()
     {
-        val time = 0
-       // findViewById<TextView>(R.id.TimeRemaining).text = "Time: "
-
-        //print(newTimerInstance.getTimeRemainingSeconds())
+        var time = newTimerInstance.getTimeRemainingSeconds()
+        println(time)
+        println("Plkease")
+        findViewById<TextView>(R.id.TimeRemaining).text = "Time: ".plus(time.toString())
     }
 
     private fun getAllWords(): ArrayList<String> {

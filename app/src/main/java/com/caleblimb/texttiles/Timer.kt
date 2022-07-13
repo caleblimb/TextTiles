@@ -1,6 +1,7 @@
 package com.caleblimb.texttiles
 
 import android.os.CountDownTimer
+import android.util.Log
 
 class Timer( TimerLength: Long?)
 {
@@ -10,7 +11,7 @@ class Timer( TimerLength: Long?)
     private class TimerInstance( timerLengthInSecond: Long?) : Thread()
     {
         private var isThreadAllowedToRun = true
-        private var timeRemaining: Long = 0;
+        var timeRemaining: Long = 0;
         private var lengthInSeconds: Long = timerLengthInSecond ?: throw IllegalArgumentException("Value required To Create Timer")
 
 
@@ -103,7 +104,7 @@ class Timer( TimerLength: Long?)
     fun getTimeRemainingSeconds() : Long
     {
        // return newTimer.timeRemaining
-        return 0;
+        return newTimer.timeRemaining
     }
 
     // This will pause the timer, but will not destroy the timer

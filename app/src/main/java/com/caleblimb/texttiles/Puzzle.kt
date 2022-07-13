@@ -10,8 +10,13 @@ class Puzzle(
     private var puzzleGridWidth: Int,
     private var puzzleGridHeight: Int,
     private var gameBoard: Array<Tile?>,
-    private val onTileMove: () -> Unit
-) : View(context) {
+    private val onTileMove: () -> Unit,
+    private val updateDisplayTimer: () -> Unit
+
+
+    ) : View(context) {
+
+
     /* Define game board dimensions */
     public var puzzleX: Float = 0f
     public var puzzleY: Float = 0f
@@ -92,7 +97,11 @@ class Puzzle(
         }
 
         if (moved)
-            onTileMove()
+            run {
+                onTileMove()
+
+            }
+
 
     }
 
@@ -169,6 +178,12 @@ class Puzzle(
                 }
             }
         }
+
+        ///////////////////////////////////////////////////////////////////////////////TODO
+        updateDisplayTimer() // update the visual of the timer
+
+
+
         return bitmap
     }
 

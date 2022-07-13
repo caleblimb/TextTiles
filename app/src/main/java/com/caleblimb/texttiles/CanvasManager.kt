@@ -8,11 +8,14 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.os.SystemClock.sleep
 import android.view.MotionEvent
+import android.view.Surface
 import android.view.View
+import android.view.ViewPropertyAnimator
 import androidx.core.content.res.ResourcesCompat
 
-class CanvasManager(context: Context, puzzle: Puzzle) : View(context) {
+class CanvasManager(context: Context, puzzle: Puzzle) : View(context)  {
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
 
@@ -89,9 +92,16 @@ class CanvasManager(context: Context, puzzle: Puzzle) : View(context) {
                 y <= puzzle.puzzleY + puzzle.puzzleHeight)
     }
 
+
+
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawBitmap(extraBitmap, 0f, 0f, null)
         canvas.drawBitmap(puzzle.render(), puzzle.puzzleX, puzzle.puzzleY, null)
+
+
+
+
     }
 }
