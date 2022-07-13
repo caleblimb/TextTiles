@@ -15,6 +15,7 @@ import java.lang.NumberFormatException
 
 import kotlin.random.Random
 
+
 class Game : AppCompatActivity() {
     lateinit var dictionary: Dictionary
 //    Bag of possible tiles
@@ -34,6 +35,7 @@ class Game : AppCompatActivity() {
     // If the game should end or not
     private var endGame : Boolean = false
 
+
     lateinit var gameBoard: Array<Tile?>
     lateinit var puzzle: Puzzle
 
@@ -43,6 +45,7 @@ class Game : AppCompatActivity() {
 //    Seeded board value
     private var seed: Int = 0
 
+    private var newTimerInstance:Timer = Timer(30)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,6 +57,9 @@ class Game : AppCompatActivity() {
         // get the seeded input from the intent
         seed = intent.getStringExtra("seed").toString().toInt() % 99999999
 
+
+        //Start Timer
+        newTimerInstance.startTimer()
 
         // Array of the board's tiles
         gameBoard = generatePuzzle(puzzleWidth * puzzleHeight, seed)
@@ -87,6 +93,15 @@ class Game : AppCompatActivity() {
         incMove()
         findViewById<TextView>(R.id.textViewMoves).text = "Moves: ".plus(moves.toString())
         findViewById<TextView>(R.id.textViewWords).text = getAllWords().toString()
+        findViewById<TextView>(R.id.TimeRemaining).text = "Time: "
+    }
+
+    private fun timerUpdate()
+    {
+        val time = 0
+       // findViewById<TextView>(R.id.TimeRemaining).text = "Time: "
+
+        print(newTimerInstance.getTimeRemainingSeconds())
     }
 
     private fun getAllWords(): ArrayList<String> {

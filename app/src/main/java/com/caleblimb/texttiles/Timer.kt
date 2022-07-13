@@ -92,6 +92,7 @@ class Timer( TimerLength: Long?)
     fun startTimer()
     {
         newTimer.start()
+        print("called")
     }
 
     // Directly set a new timer value to decrement time from

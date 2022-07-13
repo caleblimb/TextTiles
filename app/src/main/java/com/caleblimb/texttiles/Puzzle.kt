@@ -93,6 +93,7 @@ class Puzzle(
 
         if (moved)
             onTileMove()
+
     }
 
     private fun getCoordinatesOfTileAtLocation(x: Float, y: Float): Coordinate {
