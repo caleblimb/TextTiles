@@ -34,7 +34,7 @@ class Timer( TimerLength: Long?)
                 }
 
                 Thread.sleep(1000)
-                println("current time $timeRemaining" )
+
 
                 timeRemaining--
             }
@@ -92,7 +92,6 @@ class Timer( TimerLength: Long?)
     fun startTimer()
     {
         newTimer.start()
-        print("called")
     }
 
     // Directly set a new timer value to decrement time from

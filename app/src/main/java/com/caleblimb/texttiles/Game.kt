@@ -55,7 +55,7 @@ class Game : AppCompatActivity() {
 
 
         // get the seeded input from the intent
-        seed = intent.getStringExtra("seed").toString().toInt() % 99999999
+        //seed = intent.getStringExtra("seed").toString().toInt() % 99999999
 
 
         //Start Timer
@@ -93,7 +93,7 @@ class Game : AppCompatActivity() {
         incMove()
         findViewById<TextView>(R.id.textViewMoves).text = "Moves: ".plus(moves.toString())
         findViewById<TextView>(R.id.textViewWords).text = getAllWords().toString()
-        findViewById<TextView>(R.id.TimeRemaining).text = "Time: "
+        //findViewById<TextView>(R.id.TimeRemaining).text = "Time: "
     }
 
     private fun timerUpdate()
@@ -101,7 +101,7 @@ class Game : AppCompatActivity() {
         val time = 0
        // findViewById<TextView>(R.id.TimeRemaining).text = "Time: "
 
-        print(newTimerInstance.getTimeRemainingSeconds())
+        //print(newTimerInstance.getTimeRemainingSeconds())
     }
 
     private fun getAllWords(): ArrayList<String> {

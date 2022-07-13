@@ -147,6 +147,7 @@ class Puzzle(
             paint
         )
 
+
         for (y in 0 until puzzleGridHeight) {
             for (x in 0 until puzzleGridWidth) {
                 var t: Tile? = getTile(x, y)
