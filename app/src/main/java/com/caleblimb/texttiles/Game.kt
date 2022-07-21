@@ -1,7 +1,9 @@
 package com.caleblimb.texttiles
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
@@ -31,6 +33,7 @@ class Game : AppCompatActivity() {
     // If the game should end or not
     private var endGame : Boolean = false
 
+    var foundWords : ArrayList<String> = ArrayList<String>()
 
     lateinit var gameBoard: Array<Tile?>
     lateinit var puzzle: Puzzle
@@ -54,7 +57,7 @@ class Game : AppCompatActivity() {
 
 
         // get the seeded input from the intent
-        //seed = intent.getStringExtra("seed").toString().toInt() % 99999999
+        seed = intent.getStringExtra("seed").toString().toInt() % 99999999
 
 
         //Start Timer
@@ -72,6 +75,14 @@ class Game : AppCompatActivity() {
         buttonBack.setOnClickListener() {
             confirmExitGame()
         }
+
+        // For temporary 'End Game' button
+        val buttonEndGame = findViewById<Button>(R.id.buttonEndGame)
+        buttonEndGame.setOnClickListener() {
+            endGame()
+            showGameSummary()
+        }
+
 
         // Override back button
         onBackPressedDispatcher.addCallback(
@@ -92,8 +103,8 @@ class Game : AppCompatActivity() {
         incMove()
         println("Pdfhgdfhdfhse")
         findViewById<TextView>(R.id.textViewMoves).text = "Moves: ".plus(moves.toString())
-        findViewById<TextView>(R.id.textViewWords).text = getAllWords().toString()
-
+        accumulateFoundWordsFromMovement(getAllWords()) // accumulate the new words into foundWords
+        findViewById<TextView>(R.id.textViewWords).text = foundWords.toString()
     }
 
     private fun updateDisplayTimer()
@@ -129,6 +140,42 @@ class Game : AppCompatActivity() {
         return words
     }
 
+    fun showGameSummary() {
+        setContentView(R.layout.activity_summary) // change the screen to the summary
+
+        // for 'Home' button in the summary page
+        val buttonHome = findViewById<Button>(R.id.buttonHome)
+        buttonHome.setOnClickListener() {
+            val intent = Intent(this@Game, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        // for 'Quick Restart' button in summary page
+        val buttonQuickRestart = findViewById<Button>(R.id.buttonQuickRestart)
+        buttonQuickRestart.setOnClickListener() {
+            val intent = Intent(this@Game, Game::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<TextView>(R.id.textViewSeed).text = "Seed: ".plus(seed.toString()) // set the textViewSeed to include the seed
+        findViewById<TextView>(R.id.textViewWords).text = "Words: ".plus(foundWords.size.toString()) // set the textViewWords to include the size of foundWords
+        var pts = 0;
+        for (word in foundWords) {
+            pts += dictionary.wordPoints(word)
+        }
+        findViewById<TextView>(R.id.textViewPoints).text = "Points: ".plus(pts.toString()) // set the textViewPoints to include totalPoints
+        findViewById<TextView>(R.id.textViewMoves).text = "Moves: ".plus(getMoves().toString()) // set the textViewMoves to include moves
+        val wordsLinLay : LinearLayout = findViewById<LinearLayout>(R.id.linearLayoutWords)
+
+        // add a textView for every item in foundWords to the linearLayoutWords
+        for (i in foundWords.indices) {
+            val textView = TextView(this)
+            textView.text = foundWords[i]
+            textView.id = i
+            textView.textSize = 18f
+            wordsLinLay.addView(textView)
+        }
+    }
 
     private fun generatePuzzle(size: Int, seed: Int): Array<Tile?> {
 //        Generate a bag of tiles to pull from
@@ -174,6 +221,16 @@ class Game : AppCompatActivity() {
     }
 
     /* SETTERS */
+    private fun accumulateFoundWordsFromMovement(potentialWords : ArrayList<String>) {
+        // This function takes the found words from current movement and adds them
+        // to the foundWords member.
+        for (i in potentialWords) {
+            if (!foundWords.contains(i)) { // if the word is not in foundWords
+                foundWords.add(i) // add the word to foundWords
+            }
+        }
+    }
+
     fun addPoints(newPoints : Int) {
         recentPoints = newPoints
         totalPoints += newPoints
